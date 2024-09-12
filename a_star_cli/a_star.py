@@ -33,22 +33,38 @@ print(test_graph)
 class Node:
     def __init__(self, position, g=0, h=0, parent=None):
         self.position=position
+        self.g = g
+        self.h = h
+        self.f = g + h
+        self.parent = parent
     
     def __lt__(self, other):
-        other_f_score = other.g + other.h
-        lt = self if calculate_f_score(self) <= calculate_f_score(other) else other
+        return self.f < other.f
 
 
-def heuristic(node, target):
+def euclidean_distance(node, target):
     h_score = math.sqrt((node[0] - target[0])**2 + (node[1] - target[1])**2)
     return h_score
 
 
-def calculate_f_score(self):
-    f_score = self.g + self.h
-    return f_score
+def astar(test_graph, start, goal):
+    start_node = Node(start, h=euclidean_distance(start, goal))
+    #instantiate 'open' min heap and add start node
+    open_list = []
+    heapq.heappush(open_list, start_node)
+    #create set for closed nodes
+    closed_set = set()
 
-open = []
+    while open:
+        current_node = heapq.heappop(open_list)
+
+        if current_node.position == goal:
+            path = []
+            path.append(current_node.position)
+            current_node = current_node.parent
+        return path[::-1]
+
+
 
 #heapify
 # heapq.heapify(open)
