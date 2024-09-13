@@ -46,6 +46,16 @@ def astar(test_graph, start, goal):
     
         closed_set.add(current_node.position)
         #for each neighbor
+        for dx, dy in [(1,0),(0,1),(-1,0),(0,-1)]:
+            next_pos = (current_node.position[0] + dx, current_node.position[1] + dy)
+            #if out of bounds, or an obstacle, or traversed, continue
+            if (next_pos[0] < 0 or next_pos[0] >= len(test_graph) or next_pos[1] < 0 or next_pos[1] >= len(test_graph[0]) or test_graph[next_pos[0]][next_pos[1]] == 1 or next_pos in closed_set):
+                continue
+            #add to current path cost 
+            new_g = current_node.g + 1
+            new_h = euclidean_distance(current_node.position, target)
+            new_node = Node(position=next_pos, g=new_g, h=new_h, parent=current_node)
+
 
     return None
 
