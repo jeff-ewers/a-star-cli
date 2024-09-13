@@ -3,42 +3,21 @@ import math
 
 target = (4, 4)
 
-def create_graph():
-    #create sample graph with some variation
-    graph = {}
-    for x in range(5):
-        for y in range(5):
-            neighbors = {}
-            #vary x and y coordinate to iterate neighbors
-            for dx in [-1, 0, 1]:
-                for dy in [-1, 0, 1]:
-                    if dx == 0 and dy == 0:
-                        continue
-                    nx, ny = x + dx, y + dy
-                    if 0 <= nx < 5 and 0 <= ny < 5:
-                        weight = 1
-                        if (x, y) == (1, 1) and (nx, ny) == (1, 2):
-                            weight = 3
-                        elif (x, y) == (3, 3) and (nx, ny) == (3, 4):
-                            weight = 5
-                        elif (x, y) == (2, 2) and (nx, ny) == (3, 2):
-                            weight = 3
-                        neighbors[(nx, ny)] = weight
-            graph[(x, y)] = neighbors
-    return graph
 
-test_graph = create_graph()
-print(test_graph)
 
 class Node:
     def __init__(self, position, g=0, h=0, parent=None):
         self.position=position
+        # g = cost of the path from the start node to n
         self.g = g
+        # h = heuristic estimate of the cost of the cheapest path from n to the goal
         self.h = h
+        # f = f-score for minimization
         self.f = g + h
         self.parent = parent
     
     def __lt__(self, other):
+        #less than
         return self.f < other.f
 
 
@@ -57,12 +36,31 @@ def astar(test_graph, start, goal):
 
     while open:
         current_node = heapq.heappop(open_list)
-
+        #if current node is goal, retrace path and return inverse
         if current_node.position == goal:
             path = []
-            path.append(current_node.position)
-            current_node = current_node.parent
-        return path[::-1]
+            while current_node:
+                path.append(current_node.position)
+                current_node = current_node.parent
+            return path[::-1]
+    
+        closed_set.add(current_node.position)
+        #for each neighbor
+
+    return None
+
+test_graph = [
+    [0, 0, 0, 0, 1],
+    [1, 1, 0, 1, 0],
+    [0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 0],
+    [0, 0, 0, 1, 0]
+]
+start = (0, 0)
+goal = (4, 4)
+
+path = astar(test_graph, start, goal)
+print(f"Path found: {path}")
 
 
 
