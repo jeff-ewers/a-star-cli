@@ -26,7 +26,7 @@ def euclidean_distance(node, target):
     return h_score
 
 
-def astar(test_graph, start, goal):
+def a_star(test_graph, start, goal):
     start_node = Node(start, h=euclidean_distance(start, goal))
     #instantiate 'open' min heap and add start node
     open_list = []
@@ -78,7 +78,7 @@ test_graph = [
 start = (0, 0)
 goal = (4, 4)
 
-path = astar(test_graph, start, goal)
+path = a_star(test_graph, start, goal)
 print(f"Path found: {path}")
 
 
