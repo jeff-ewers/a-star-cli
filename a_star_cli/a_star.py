@@ -53,10 +53,19 @@ def astar(test_graph, start, goal):
                 continue
             #add to current path cost 
             new_g = current_node.g + 1
+            #calculate heuristic for new_node
             new_h = euclidean_distance(current_node.position, target)
+            #instantiate new_node
             new_node = Node(position=next_pos, g=new_g, h=new_h, parent=current_node)
 
-
+            if new_node not in open_list:
+                heapq.heappush(open_list, new_node)
+            else:
+                index = open_list.index(new_node)
+                #if new path is more efficient, use it
+                if open_list[index].g > new_g:
+                    open_list[index] = new_node
+                    heapq.heapify(open_list)
     return None
 
 test_graph = [
