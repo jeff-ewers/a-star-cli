@@ -19,3 +19,17 @@ def print_grid(grid, path=None):
             else:
                 print(".", end=" ")
         print()
+
+def main():
+    parser = argparse.ArgumentParser(description="A* Pathfinding Algorithm Demo")
+    parser.add_argument("--size", type=int, default=10, help="Size of the grid")
+    parser.add_argument("--start", type=int, nargs=2, default=[0,0], help="Start position (row column)")
+    parser.add_argument("--goal", type=int, nargs=2, default=None, help="Goal position (row column)")
+    args = parser.parse_args()
+
+    grid = generate_random_grid(args.size)
+    start = tuple(args.start)
+    goal = tuple(args.goal) if args.goal else (args.size - 1, args.size - 1)
+
+    print("Initial grid:")
+    print_grid(grid)
