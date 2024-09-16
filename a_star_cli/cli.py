@@ -33,3 +33,18 @@ def main():
 
     print("Initial grid:")
     print_grid(grid)
+
+    print(f"Finding path from {start} to {goal}...")
+
+    #find path using A*
+    path = a_star(grid, start, goal)
+
+    if path:
+        print("\nPath found!")
+        print_grid(grid, path)
+        print(f"\nPath: {path}")
+    else:
+        print("\nNo path found.")
+
+if __name__ == "__main__":
+    main()
