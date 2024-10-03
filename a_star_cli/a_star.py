@@ -21,8 +21,8 @@ class Node:
         return self.f < other.f
 
 
-def euclidean_distance(node, target):
-    h_score = math.sqrt((node[0] - target[0])**2 + (node[1] - target[1])**2)
+def euclidean_distance(node, goal):
+    h_score = math.sqrt((node[0] - goal[0])**2 + (node[1] - goal[1])**2)
     return h_score
 
 
@@ -34,7 +34,7 @@ def a_star(test_graph, start, goal):
     #create set for closed nodes
     closed_set = set()
 
-    while open:
+    while open_list:
         current_node = heapq.heappop(open_list)
         #if current node is goal, retrace path and return inverse
         if current_node.position == goal:
@@ -54,7 +54,7 @@ def a_star(test_graph, start, goal):
             #add to current path cost 
             new_g = current_node.g + 1
             #calculate heuristic for new_node
-            new_h = euclidean_distance(current_node.position, target)
+            new_h = euclidean_distance(next_pos, target)
             #instantiate new_node
             new_node = Node(position=next_pos, g=new_g, h=new_h, parent=current_node)
 
