@@ -3,7 +3,7 @@
 
 ## Overview
 
-This project implements the [A* (A-star) pathfinding algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) with a command-line interface. It generates a random grid with obstacles and finds the shortest path between two points using the A* algorithm. The application visualizes the grid and the found path in the console.
+This demo project implements the [A* (A-star) pathfinding algorithm](https://en.wikipedia.org/wiki/A*_search_algorithm) with a command-line interface. It generates a random grid with obstacles and finds the shortest path between two points using the A* algorithm. The application visualizes the grid and the found path in the console.
 
 ## Features
 
