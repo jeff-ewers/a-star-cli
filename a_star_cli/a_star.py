@@ -1,9 +1,6 @@
 import heapq
 import math
 
-target = (4, 4)
-
-
 
 class Node:
     def __init__(self, position, g=0, h=0, parent=None):
@@ -19,6 +16,10 @@ class Node:
     def __lt__(self, other):
         #less than
         return self.f < other.f
+    
+    def __eq__(self, other):
+        return self.position == other.position
+
 
 
 def euclidean_distance(node, goal):
@@ -26,7 +27,7 @@ def euclidean_distance(node, goal):
     return h_score
 
 
-def a_star(test_graph, start, goal):
+def a_star(graph, start, goal):
     start_node = Node(start, h=euclidean_distance(start, goal))
     #instantiate 'open' min heap and add start node
     open_list = []
@@ -46,13 +47,13 @@ def a_star(test_graph, start, goal):
     
         closed_set.add(current_node.position)
         #for each neighbor
-        for dx, dy in [(1,0),(0,1),(-1,0),(0,-1)]:
+        for dx, dy in [(1,0),(0,1),(-1,0),(0,-1),(1,1),(-1,1),(1,-1),(-1,-1)]:
             next_pos = (current_node.position[0] + dx, current_node.position[1] + dy)
             #if out of bounds, or an obstacle, or traversed, continue
-            if (next_pos[0] < 0 or next_pos[0] >= len(test_graph) or next_pos[1] < 0 or next_pos[1] >= len(test_graph[0]) or test_graph[next_pos[0]][next_pos[1]] == 1 or next_pos in closed_set):
+            if (next_pos[0] < 0 or next_pos[0] >= len(graph) or next_pos[1] < 0 or next_pos[1] >= len(graph[0]) or graph[next_pos[0]][next_pos[1]] == 1 or next_pos in closed_set):
                 continue
             #add to current path cost 
-            new_g = current_node.g + 1
+            new_g = current_node.g + + euclidean_distance(current_node.position, next_pos)
             #calculate heuristic for new_node
             new_h = euclidean_distance(next_pos, target)
             #instantiate new_node
@@ -68,7 +69,7 @@ def a_star(test_graph, start, goal):
                     heapq.heapify(open_list)
     return None
 
-test_graph = [
+graph = [
     [0, 0, 0, 0, 1],
     [1, 1, 0, 1, 0],
     [0, 0, 0, 0, 0],
@@ -78,33 +79,6 @@ test_graph = [
 start = (0, 0)
 goal = (4, 4)
 
-path = a_star(test_graph, start, goal)
+path = a_star(graph, start, goal)
 print(f"Path found: {path}")
-
-
-
-#heapify
-# heapq.heapify(open)
-# closed = []
-
-#pop from minheap
-# current_node = heapq.heappop(open)
-#if node is goal:
-# if current_node == target:
-#     pass
-    #while not origin
-        #get parent
-        #add parent
-
-#   retrace and return path
-#add to closed
-#
-#for each neighbor
-#   if not in open:
-#       compute g, h, and f scores
-#       set parent to current node
-#       add to open
-#   if in open:
-#       if current path has lower g score:
-#           update score and parent
 
