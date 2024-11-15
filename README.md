@@ -40,8 +40,9 @@ This demo project implements the [A* (A-star) pathfinding algorithm](https://en.
 
 Run the CLI application with default settings:
 
-```bash
-python cli_app.py
+```
+bash
+python cli.py
 ```
 
 ### Command-line Arguments
